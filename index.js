@@ -61,13 +61,23 @@ app.post("/api/exercise/add", (req, res) => {
         if(err) {
           res.json({message: "error"});
         } else {
-          res.json({
+          const dateObj = new Date(date);
+          const dateOut = dateObj.toLocaleDateString("en-us", {
+            weekday: "short",
+          }) + " " + dateObj.toLocaleDateString("en-us", {
+            month: "short",
+          }) + " " + dateObj.toLocaleDateString("en-us", {
+            day: "2-digit",
+          }) + " " + dateObj.getFullYear();
+          var payload = {
             _id: data._id,
             username: data.username,
-            date: exercise.date,
+            date: dateOut,
             duration: exercise.duration,
             description: exercise.description,
-          });
+          };
+          console.log(payload);
+          res.json(payload);
         }
       });
     } else {
